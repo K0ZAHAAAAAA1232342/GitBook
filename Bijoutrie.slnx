@@ -1,0 +1,6 @@
+<Solution>
+  <Project Path="Bijoutrie/bijoutrie.esproj">
+    <Build />
+    <Deploy />
+  </Project>
+</Solution>
