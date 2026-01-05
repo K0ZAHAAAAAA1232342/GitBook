@@ -1,0 +1,4 @@
+site: Bijouterie
+title: Bijouterie - Catalogue de Bijoux
+description: Un catalogue moderne de bijouterie construit avec PHP et Tailwind CSS
+theme: jekyll-theme-minimal
