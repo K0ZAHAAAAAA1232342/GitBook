@@ -136,7 +136,7 @@ if ($selectedCategory !== 'all') {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bijouterie Luxury - Catalogue Haute Joaillerie</title>
+    <title>Stone Jewelry - Catalogue Haute Joaillerie</title>
     <meta name="description" content="Découvrez notre collection exclusive de bijoux et montres de luxe. Colliers, montres Rolex, créations sur mesure.">
     
     <!-- Preconnect for performance -->
@@ -181,7 +181,7 @@ if ($selectedCategory !== 'all') {
       
       <div class="hero-content relative z-10 max-w-4xl mx-auto space-y-8">
         <h1 class="hero-title text-5xl md:text-7xl font-bold bg-gradient-to-r from-gold via-silver to-gold bg-clip-text text-transparent mb-6 animate-fade-in-up">
-          Bijouterie Luxury
+          Stone Jewelry
         </h1>
         <p class="hero-subtitle text-xl md:text-2xl text-gray-300 font-light max-w-2xl mx-auto" style="animation: fadeInUp 0.8s ease-out 0.2s both;">
           L'excellence de la haute joaillerie française
@@ -267,7 +267,7 @@ if ($selectedCategory !== 'all') {
       <div class="container mx-auto px-4">
         <div class="grid grid-cols-1 md:grid-cols-4 gap-12 mb-12">
           <div>
-            <h3 class="text-2xl font-bold bg-gradient-to-r from-gold to-silver bg-clip-text text-transparent mb-4">Bijouterie Luxury</h3>
+            <h3 class="text-2xl font-bold bg-gradient-to-r from-gold to-silver bg-clip-text text-transparent mb-4">Stone Jewelry</h3>
             <p class="text-gray-400">L'art de la haute joaillerie française depuis 1890</p>
           </div>
           <div>
@@ -295,7 +295,7 @@ if ($selectedCategory !== 'all') {
           </div>
         </div>
         <div class="border-t border-gray-800 pt-8 text-center text-gray-500 text-sm">
-          <p>&copy; 2024 Bijouterie Luxury. Tous droits réservés.</p>
+          <p>&copy; 2024 Stone Jewelry. Tous droits réservés.</p>
         </div>
       </div>
     </footer>

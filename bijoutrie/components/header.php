@@ -18,7 +18,7 @@ function renderHeader($currentPage = 'catalogue') {
 
           <!-- Logo -->
           <a href="index.php" class="logo-container flex-shrink-0 hover:opacity-80 transition-all duration-300 relative group">
-            <img src="<?php echo $logo; ?>" alt="Bijouterie Luxury" class="h-14 w-auto relative z-10 transition-transform duration-300 group-hover:scale-105" />
+            <img src="<?php echo $logo; ?>" alt="Stone Jewelry" class="h-14 w-auto relative z-10 transition-transform duration-300 group-hover:scale-105" />
             <div class="absolute inset-0 bg-gradient-to-r from-gold/20 to-silver/20 blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
           </a>
 
