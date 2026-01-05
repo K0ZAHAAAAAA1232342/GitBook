@@ -4,6 +4,9 @@ require_once 'components/header.php';
 require_once 'components/product_card.php';
 require_once 'components/filter_sidebar.php';
 
+// Get current page
+$currentPage = isset($_GET['page']) ? $_GET['page'] : 'catalogue';
+
 // Data
 $products = [
   [
@@ -130,6 +133,14 @@ if ($selectedCategory !== 'all') {
     }
 }
 
+// Filter products for "Nouveautés" page
+if ($currentPage === 'nouveautes') {
+    $filteredProducts = array_filter($products, function($product) {
+        return $product['isNew'] === true;
+    });
+    $currentCategoryName = "Nouveautés";
+}
+
 ?>
 <!DOCTYPE html>
 <html lang="fr">
@@ -170,97 +181,214 @@ if ($selectedCategory !== 'all') {
     <link rel="icon" href="Gemini_Generated_Image_8xfwsl8xfwsl8xfw.png" type="image/png">
 </head>
 <body class="bg-cream">
-    <?php renderHeader(); ?>
+    <?php renderHeader($currentPage); ?>
 
-    <!-- Hero Section -->
-    <section class="hero relative min-h-[70vh] flex items-center justify-center text-center px-4 py-20 bg-gradient-to-br from-gray-900 via-black to-gray-900 overflow-hidden">
-      <div class="absolute inset-0 opacity-10">
-        <div class="absolute top-1/4 left-1/4 w-96 h-96 bg-gold rounded-full filter blur-3xl animate-pulse"></div>
-        <div class="absolute bottom-1/4 right-1/4 w-96 h-96 bg-silver rounded-full filter blur-3xl animate-pulse" style="animation-delay: 1s;"></div>
-      </div>
-      
-      <div class="hero-content relative z-10 max-w-4xl mx-auto space-y-8">
-        <h1 class="hero-title text-5xl md:text-7xl font-bold bg-gradient-to-r from-gold via-silver to-gold bg-clip-text text-transparent mb-6 animate-fade-in-up">
-          Stone Jewelry
-        </h1>
-        <p class="hero-subtitle text-xl md:text-2xl text-gray-300 font-light max-w-2xl mx-auto" style="animation: fadeInUp 0.8s ease-out 0.2s both;">
-          L'excellence de la haute joaillerie française
-        </p>
-        <div class="flex flex-col sm:flex-row gap-4 justify-center items-center" style="animation: fadeInUp 0.8s ease-out 0.4s both;">
-          <a href="#collection" class="btn-primary px-8 py-4 bg-gradient-to-r from-gold to-dark-gold text-white rounded-full hover:shadow-2xl transition-all duration-300 transform hover:scale-105 flex items-center gap-2">
-            <span class="font-semibold tracking-wide">Découvrir la Collection</span>
-            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
-            </svg>
-          </a>
-          <a href="?page=sur-mesure" class="px-8 py-4 border-2 border-gold text-gold rounded-full hover:bg-gold hover:text-white transition-all duration-300 transform hover:scale-105 font-semibold tracking-wide">
-            Création Sur Mesure
-          </a>
-        </div>
-      </div>
-      
-      <div class="scroll-indicator absolute bottom-8">
-        <svg class="w-6 h-6 text-gold animate-bounce" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
-        </svg>
-      </div>
-    </section>
-
-    <!-- Main Collection -->
-    <div id="collection" class="container mx-auto px-4 py-16">
-      <div class="flex flex-col lg:flex-row gap-8">
-        <!-- Sidebar -->
-        <aside class="lg:w-80 flex-shrink-0">
-          <?php renderFilterSidebar($selectedCategory, $priceRange); ?>
-        </aside>
-
-        <!-- Main Content -->
-        <main class="flex-1">
-          <!-- Collection Header -->
-          <div class="mb-12 fade-in-up">
-            <div class="flex items-center justify-between mb-6">
-              <div>
-                <h2 class="text-4xl font-bold text-gray-900 mb-2">
-                  <?php echo htmlspecialchars($currentCategoryName); ?>
-                </h2>
-                <p class="text-gray-600 flex items-center gap-2">
-                  <svg class="w-5 h-5 text-gold" fill="currentColor" viewBox="0 0 20 20">
-                    <path d="M9 2a1 1 0 000 2h2a1 1 0 100-2H9z"></path>
-                    <path fill-rule="evenodd" d="M4 5a2 2 0 012-2 3 3 0 003 3h2a3 3 0 003-3 2 2 0 012 2v11a2 2 0 01-2 2H6a2 2 0 01-2-2V5zm3 4a1 1 0 000 2h.01a1 1 0 100-2H7zm3 0a1 1 0 000 2h3a1 1 0 100-2h-3zm-3 4a1 1 0 100 2h.01a1 1 0 100-2H7zm3 0a1 1 0 100 2h3a1 1 0 100-2h-3z" clip-rule="evenodd"></path>
+    <?php if ($currentPage === 'sur-mesure'): ?>
+        <!-- Sur Mesure Page -->
+        <section class="hero relative min-h-[70vh] flex items-center justify-center text-center px-4 py-20 bg-gradient-to-br from-gray-900 via-black to-gray-900 overflow-hidden">
+          <div class="hero-content relative z-10 max-w-4xl mx-auto space-y-8">
+            <h1 class="hero-title text-5xl md:text-7xl font-bold bg-gradient-to-r from-gold via-silver to-gold bg-clip-text text-transparent mb-6">
+              Création Sur Mesure
+            </h1>
+            <p class="hero-subtitle text-xl md:text-2xl text-gray-300 font-light max-w-2xl mx-auto">
+              Transformez vos rêves en bijoux d'exception
+            </p>
+          </div>
+        </section>
+        
+        <div class="container mx-auto px-4 py-16">
+          <div class="max-w-4xl mx-auto">
+            <div class="bg-white rounded-2xl shadow-xl p-8 md:p-12 mb-8">
+              <h2 class="text-3xl font-bold text-gray-900 mb-6">Un service d'exception</h2>
+              <p class="text-gray-600 mb-6 leading-relaxed">
+                Notre atelier de joaillerie vous accompagne dans la création de vos bijoux sur mesure. 
+                De la conception à la réalisation, nos artisans mettent leur savoir-faire à votre service 
+                pour donner vie à vos projets les plus précieux.
+              </p>
+              
+              <div class="grid md:grid-cols-3 gap-6 my-12">
+                <div class="text-center p-6 bg-cream rounded-xl">
+                  <div class="w-16 h-16 bg-gradient-to-br from-gold to-dark-gold rounded-full mx-auto mb-4 flex items-center justify-center">
+                    <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"></path>
+                    </svg>
+                  </div>
+                  <h3 class="font-semibold text-gray-900 mb-2">Conception</h3>
+                  <p class="text-sm text-gray-600">Design personnalisé selon vos envies</p>
+                </div>
+                
+                <div class="text-center p-6 bg-cream rounded-xl">
+                  <div class="w-16 h-16 bg-gradient-to-br from-gold to-dark-gold rounded-full mx-auto mb-4 flex items-center justify-center">
+                    <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                    </svg>
+                  </div>
+                  <h3 class="font-semibold text-gray-900 mb-2">Validation</h3>
+                  <p class="text-sm text-gray-600">Maquette 3D et ajustements</p>
+                </div>
+                
+                <div class="text-center p-6 bg-cream rounded-xl">
+                  <div class="w-16 h-16 bg-gradient-to-br from-gold to-dark-gold rounded-full mx-auto mb-4 flex items-center justify-center">
+                    <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"></path>
+                    </svg>
+                  </div>
+                  <h3 class="font-semibold text-gray-900 mb-2">Création</h3>
+                  <p class="text-sm text-gray-600">Fabrication artisanale d'excellence</p>
+                </div>
+              </div>
+              
+              <div class="text-center mt-8">
+                <a href="#contact" class="btn-primary inline-flex items-center gap-2 px-8 py-4 bg-gradient-to-r from-gold to-dark-gold text-white rounded-full hover:shadow-2xl transition-all duration-300">
+                  <span class="font-semibold tracking-wide">Prendre Rendez-vous</span>
+                  <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
                   </svg>
-                  <span class="font-semibold"><?php echo count($filteredProducts); ?></span> 
-                  <?php echo count($filteredProducts) === 1 ? "produit d'exception" : "produits d'exception"; ?>
-                </p>
+                </a>
               </div>
             </div>
           </div>
+        </div>
 
-          <!-- Product Grid -->
-          <?php if (!empty($filteredProducts)): ?>
-          <div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-8">
-            <?php foreach ($filteredProducts as $product): ?>
-              <?php renderProductCard($product); ?>
-            <?php endforeach; ?>
+    <?php elseif ($currentPage === 'a-propos'): ?>
+        <!-- À Propos Page -->
+        <section class="hero relative min-h-[70vh] flex items-center justify-center text-center px-4 py-20 bg-gradient-to-br from-gray-900 via-black to-gray-900 overflow-hidden">
+          <div class="hero-content relative z-10 max-w-4xl mx-auto space-y-8">
+            <h1 class="hero-title text-5xl md:text-7xl font-bold bg-gradient-to-r from-gold via-silver to-gold bg-clip-text text-transparent mb-6">
+              À Propos
+            </h1>
+            <p class="hero-subtitle text-xl md:text-2xl text-gray-300 font-light max-w-2xl mx-auto">
+              Une histoire de passion et d'excellence
+            </p>
           </div>
-          <?php else: ?>
-          <!-- No Results -->
-          <div class="text-center py-20 fade-in-up">
-            <svg class="w-24 h-24 mx-auto text-gray-300 mb-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+        </section>
+        
+        <div class="container mx-auto px-4 py-16">
+          <div class="max-w-4xl mx-auto">
+            <div class="bg-white rounded-2xl shadow-xl p-8 md:p-12 mb-8">
+              <h2 class="text-3xl font-bold text-gray-900 mb-6">Notre Histoire</h2>
+              <p class="text-gray-600 mb-6 leading-relaxed">
+                Depuis 1890, Stone Jewelry perpétue l'art de la haute joaillerie française. 
+                Notre maison s'est forgée une réputation d'excellence à travers plus d'un siècle 
+                de créations exceptionnelles et de savoir-faire artisanal.
+              </p>
+              
+              <h3 class="text-2xl font-semibold text-gray-900 mb-4 mt-8">Nos Valeurs</h3>
+              <div class="grid md:grid-cols-2 gap-6">
+                <div class="p-6 bg-cream rounded-xl">
+                  <h4 class="font-semibold text-gold mb-2">Excellence</h4>
+                  <p class="text-sm text-gray-600">Chaque pièce est une œuvre d'art unique, créée avec le plus grand soin</p>
+                </div>
+                <div class="p-6 bg-cream rounded-xl">
+                  <h4 class="font-semibold text-gold mb-2">Tradition</h4>
+                  <p class="text-sm text-gray-600">Un savoir-faire transmis de génération en génération</p>
+                </div>
+                <div class="p-6 bg-cream rounded-xl">
+                  <h4 class="font-semibold text-gold mb-2">Innovation</h4>
+                  <p class="text-sm text-gray-600">Des créations qui allient héritage et modernité</p>
+                </div>
+                <div class="p-6 bg-cream rounded-xl">
+                  <h4 class="font-semibold text-gold mb-2">Exclusivité</h4>
+                  <p class="text-sm text-gray-600">Des collections limitées pour une clientèle exigeante</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+    <?php else: ?>
+        <!-- Hero Section (Catalogue & Nouveautés) -->
+        <section class="hero relative min-h-[70vh] flex items-center justify-center text-center px-4 py-20 bg-gradient-to-br from-gray-900 via-black to-gray-900 overflow-hidden">
+          <div class="absolute inset-0 opacity-10">
+            <div class="absolute top-1/4 left-1/4 w-96 h-96 bg-gold rounded-full filter blur-3xl animate-pulse"></div>
+            <div class="absolute bottom-1/4 right-1/4 w-96 h-96 bg-silver rounded-full filter blur-3xl animate-pulse" style="animation-delay: 1s;"></div>
+          </div>
+          
+          <div class="hero-content relative z-10 max-w-4xl mx-auto space-y-8">
+            <h1 class="hero-title text-5xl md:text-7xl font-bold bg-gradient-to-r from-gold via-silver to-gold bg-clip-text text-transparent mb-6 animate-fade-in-up">
+              Stone Jewelry
+            </h1>
+            <p class="hero-subtitle text-xl md:text-2xl text-gray-300 font-light max-w-2xl mx-auto" style="animation: fadeInUp 0.8s ease-out 0.2s both;">
+              L'excellence de la haute joaillerie française
+            </p>
+            <div class="flex flex-col sm:flex-row gap-4 justify-center items-center" style="animation: fadeInUp 0.8s ease-out 0.4s both;">
+              <a href="#collection" class="btn-primary px-8 py-4 bg-gradient-to-r from-gold to-dark-gold text-white rounded-full hover:shadow-2xl transition-all duration-300 transform hover:scale-105 flex items-center gap-2">
+                <span class="font-semibold tracking-wide">Découvrir la Collection</span>
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                </svg>
+              </a>
+              <a href="?page=sur-mesure" class="px-8 py-4 border-2 border-gold text-gold rounded-full hover:bg-gold hover:text-white transition-all duration-300 transform hover:scale-105 font-semibold tracking-wide">
+                Création Sur Mesure
+              </a>
+            </div>
+          </div>
+          
+          <div class="scroll-indicator absolute bottom-8">
+            <svg class="w-6 h-6 text-gold animate-bounce" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
             </svg>
-            <h3 class="text-2xl font-semibold text-gray-700 mb-4">Aucun produit trouvé</h3>
-            <p class="text-gray-500 mb-8">Essayez de modifier vos filtres pour découvrir nos créations</p>
-            <a href="index.php" class="btn-primary inline-flex items-center gap-2 px-8 py-3 bg-gradient-to-r from-gold to-dark-gold text-white rounded-full hover:shadow-xl transition-all duration-300">
-              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path>
-              </svg>
-              Réinitialiser les filtres
-            </a>
           </div>
-          <?php endif; ?>
-        </main>
-      </div>
-    </div>
+        </section>
+
+        <!-- Main Collection -->
+        <div id="collection" class="container mx-auto px-4 py-16">
+          <div class="flex flex-col lg:flex-row gap-8">
+            <!-- Sidebar (only for catalogue page) -->
+            <?php if ($currentPage === 'catalogue'): ?>
+            <aside class="lg:w-80 flex-shrink-0">
+              <?php renderFilterSidebar($selectedCategory, $priceRange); ?>
+            </aside>
+            <?php endif; ?>
+
+            <!-- Main Content -->
+            <main class="flex-1">
+              <!-- Collection Header -->
+              <div class="mb-12 fade-in-up">
+                <div class="flex items-center justify-between mb-6">
+                  <div>
+                    <h2 class="text-4xl font-bold text-gray-900 mb-2">
+                      <?php echo htmlspecialchars($currentCategoryName); ?>
+                    </h2>
+                    <p class="text-gray-600 flex items-center gap-2">
+                      <svg class="w-5 h-5 text-gold" fill="currentColor" viewBox="0 0 20 20">
+                        <path d="M9 2a1 1 0 000 2h2a1 1 0 100-2H9z"></path>
+                        <path fill-rule="evenodd" d="M4 5a2 2 0 012-2 3 3 0 003 3h2a3 3 0 003-3 2 2 0 012 2v11a2 2 0 01-2 2H6a2 2 0 01-2-2V5zm3 4a1 1 0 000 2h.01a1 1 0 100-2H7zm3 0a1 1 0 000 2h3a1 1 0 100-2h-3zm-3 4a1 1 0 100 2h.01a1 1 0 100-2H7zm3 0a1 1 0 100 2h3a1 1 0 100-2h-3z" clip-rule="evenodd"></path>
+                      </svg>
+                      <span class="font-semibold"><?php echo count($filteredProducts); ?></span> 
+                      <?php echo count($filteredProducts) === 1 ? "produit d'exception" : "produits d'exception"; ?>
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Product Grid -->
+              <?php if (!empty($filteredProducts)): ?>
+              <div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-8">
+                <?php foreach ($filteredProducts as $product): ?>
+                  <?php renderProductCard($product); ?>
+                <?php endforeach; ?>
+              </div>
+              <?php else: ?>
+              <!-- No Results -->
+              <div class="text-center py-20 fade-in-up">
+                <svg class="w-24 h-24 mx-auto text-gray-300 mb-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                </svg>
+                <h3 class="text-2xl font-semibold text-gray-700 mb-4">Aucun produit trouvé</h3>
+                <p class="text-gray-500 mb-8">Essayez de modifier vos filtres pour découvrir nos créations</p>
+                <a href="index.php" class="btn-primary inline-flex items-center gap-2 px-8 py-3 bg-gradient-to-r from-gold to-dark-gold text-white rounded-full hover:shadow-xl transition-all duration-300">
+                  <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path>
+                  </svg>
+                  Réinitialiser les filtres
+                </a>
+              </div>
+              <?php endif; ?>
+            </main>
+          </div>
+        </div>
+    <?php endif; ?>
 
     <!-- Footer -->
     <footer class="bg-gray-900 text-white py-16 mt-20">
