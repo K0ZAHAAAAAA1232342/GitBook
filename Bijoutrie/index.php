@@ -48,7 +48,7 @@ $products = [
   ],
   [
     'id' => 5,
-    'name' => "Rolex Day-Date "President" – Or jaune 18k",
+    'name' => "Rolex Day-Date President – Or jaune 18k",
     'price' => 52000,
     'category' => "Montres",
     'categoryId' => "watches",
